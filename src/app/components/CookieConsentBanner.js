@@ -54,6 +54,8 @@ const CookieConsentBanner = ({ isGTMInitialized }) => {
 
     const consentData = {
       ad_storage: consent.ads ? 'granted' : 'denied',
+      ad_user_data: consent.ads ? 'granted' : 'denied',
+      ad_personalization: consent.ads ? 'granted' : 'denied',
       analytics_storage: consent.analytics ? 'granted' : 'denied',
       functionality_storage: consent.functional ? 'granted' : 'denied',
       personalization_storage: consent.personalized ? 'granted' : 'denied',
