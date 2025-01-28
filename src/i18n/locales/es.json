@@ -1,0 +1,30 @@
+{
+    "cookiePreferencesTitle": "Preferencias de cookies",
+    "cookieDescription": "Utilizamos cookies para mejorar su experiencia de navegación y ofrecer contenido relevante. Estas cookies nos ayudan a comprender sus interacciones con el sitio, mejorar las funciones y ofrecer contenido personalizado. Usted tiene control sobre qué cookies se colocan en su dispositivo, permitiéndole personalizar su experiencia. Por favor, revise las opciones disponibles y seleccione las cookies que desea utilizar.",
+    "managePreferences": "Gestionar preferencias",
+    "necessary": {
+        "label": "Necesarias",
+        "description": "Esta configuración activa cookies esenciales para el funcionamiento correcto del sitio web, por lo que son obligatorias. Estas cookies ayudan con funcionalidades básicas como la autenticación de usuarios y las preferencias."
+    },
+    "advertising": {
+        "label": "Publicidad",
+        "description": "Las cookies publicitarias se utilizan para mostrar anuncios dirigidos según su comportamiento de navegación anterior. También ayudan a evaluar la efectividad de las campañas publicitarias."
+    },
+    "analytics": {
+        "label": "Analíticas",
+        "description": "Las cookies analíticas ayudan a rastrear cómo interactúan los usuarios con el sitio web. Recopilan datos como el número de visitantes, fuentes de tráfico y la tasa de rebote para mejorar los conocimientos del usuario."
+    },
+    "functionality": {
+        "label": "Funcionalidad",
+        "description": "Las cookies funcionales admiten varias funciones interactivas en el sitio, como habilitar el uso compartido en redes sociales, recopilar comentarios de usuarios e incorporar funcionalidades de terceros."
+    },
+    "personalization": {
+        "label": "Personalización",
+        "description": "Las cookies de personalización recopilan datos para adaptar la experiencia del sitio a usuarios individuales. Rastrean interacciones clave para ofrecer una experiencia más personalizada basada en preferencias."
+    },
+    "buttons": {
+        "rejectAll": "Rechazar todo",
+        "savePreferences": "Guardar preferencias",
+        "acceptAll": "Aceptar todo"
+    }
+}

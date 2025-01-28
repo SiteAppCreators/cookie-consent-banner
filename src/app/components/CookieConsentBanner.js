@@ -3,8 +3,9 @@
 
 import { useState, useEffect } from 'react';
 import { useCookies } from 'react-cookie';
-import { Box, Button, Typography, Checkbox, FormControlLabel, Dialog, DialogActions, DialogContent, DialogTitle, Switch, FormGroup, Divider, FormLabel, Accordion, AccordionSummary, AccordionDetails } from '@mui/material';
+import { Box, Button, Typography, Checkbox, FormControlLabel, Dialog, DialogActions, DialogContent, DialogTitle, Switch, FormGroup, Divider, FormLabel, Accordion, AccordionSummary, AccordionDetails, Select, MenuItem } from '@mui/material';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import { useTranslation } from 'react-i18next';
 
 const PreferenceOption = ({ option, checked, onChange, index }) => (
   <Box sx={{ mb: '20px' }}>
@@ -30,28 +31,30 @@ const PreferenceOption = ({ option, checked, onChange, index }) => (
 );
 
 const CookieConsentBanner = ({ isGTMInitialized }) => {
-  const [cookies, setCookie] = useCookies(['cookie-consent']);
-  const [isVisible, setIsVisible] = useState(false);
+  const { t, i18n } = useTranslation(); // Translation hook
+  const [cookies, setCookie] = useCookies(['cookie-consent']); // Name of cookie
+  const [isVisible, setIsVisible] = useState(false); // Show the banner
+  const [selectedLanguage, setSelectedLanguage] = useState(i18n.language); // Selected language
   const [preferences, setPreferences] = useState({
     analytics: false,
     ads: false,
     functional: false,
     personalized: false,
     security: true,
-  });
+  }); // All used cookies
 
   useEffect(() => {
-    // Toon de banner als er nog geen keuze is gemaakt
+    // Show banner if no cookie consent is found
     if (!cookies['cookie-consent']) {
       setIsVisible(true);
     } else {
-      // Synchroniseer bestaande toestemming met GTM
+      // Synchronize cookie consent with GTM when opening the page
       syncConsentWithGTM(cookies['cookie-consent']);
     }
   }, [cookies]);
 
   function syncConsentWithGTM(consent) {
-    if (!isGTMInitialized) return; // Wacht tot GTM geladen is
+    if (!isGTMInitialized) return; // Wait till GTM is initialized
 
     const consentData = {
       ad_storage: consent.ads ? 'granted' : 'denied',
@@ -61,7 +64,7 @@ const CookieConsentBanner = ({ isGTMInitialized }) => {
       functionality_storage: consent.functional ? 'granted' : 'denied',
       personalization_storage: consent.personalized ? 'granted' : 'denied',
       security_storage: consent.security ? 'granted' : 'denied',
-    };
+    }; // GTM consent data
 
     if (typeof window.gtag === 'function') {
       window.gtag('consent', 'update', consentData);
@@ -70,13 +73,13 @@ const CookieConsentBanner = ({ isGTMInitialized }) => {
     }
   };
 
-  function handleSavePreferences() {
+  function handleSavePreferences() { // Save the preferences
     setCookie('cookie-consent', preferences, { path: '/', maxAge: 365 * 24 * 60 * 60 });
     setIsVisible(false);
     syncConsentWithGTM(preferences);
   };
 
-  function handleRejectAll() {
+  function handleRejectAll() {  // Reject all cookies
     const rejectedPreferences = {
       analytics: false,
       ads: false,
@@ -92,7 +95,7 @@ const CookieConsentBanner = ({ isGTMInitialized }) => {
     }, 200)
   };
 
-  function handleAcceptAll() {
+  function handleAcceptAll() { // Accept all cookies
     const acceptedPreferences = {
       analytics: true,
       ads: true,
@@ -107,7 +110,7 @@ const CookieConsentBanner = ({ isGTMInitialized }) => {
     setTimeout(() => {
       setIsVisible(false);
       syncConsentWithGTM(acceptedPreferences);
-    }, 100)
+    }, 200)
   }
 
   function handlePreferenceChange(e) {
@@ -125,32 +128,37 @@ const CookieConsentBanner = ({ isGTMInitialized }) => {
   const preferenceOptions = [
     {
       name: 'security',
-      label: 'Necessary',
-      description: 'This setting enables cookies that are essential for the website to function properly, so are required. These cookies help with basic functionalities such as user authentication and preferences.',
+      label: t('necessary.label'),
+      description: t('necessary.description'),
       disabled: true,
     },
     {
       name: 'ads',
-      label: 'Advertising',
-      description: 'Advertising cookies are used to display targeted ads according to your previous browsing behavior on the site. They also assist in evaluating the effectiveness of ad campaigns.',
+      label: t('advertising.label'),
+      description: t('advertising.description'),
     },
     {
       name: 'analytics',
-      label: 'Analytics',
-      description: 'Analytics cookies help track how users interact with the website. They gather data like the number of visitors, sources of traffic, and the bounce rate to improve user insights.',
+      label: t('analytics.label'),
+      description: t('analytics.description'),
     },
     {
       name: 'functional',
-      label: 'Functionality',
-      description: 'Functional cookies support various interactive features on the site, such as enabling social media sharing, gathering user feedback, and incorporating third-party functionalities.',
+      label: t('functionality.label'),
+      description: t('functionality.description'),
     },
     {
       name: 'personalized',
-      label: 'Personalization',
-      description: 'Personalized cookies gather data to tailor the website experience to individual users. They track key interactions to deliver a more customized experience based on preferences.',
+      label: t('personalization.label'),
+      description: t('personalization.description'),
     },
   ];
 
+  const handleLanguageChange = (event) => {
+    const selectedLang = event.target.value;
+    setSelectedLanguage(selectedLang);
+    i18n.changeLanguage(selectedLang);
+  };
 
   return (
     <Dialog
@@ -160,16 +168,30 @@ const CookieConsentBanner = ({ isGTMInitialized }) => {
       maxWidth="sm"
       fullWidth
     >
-      <DialogTitle variant='h4' mt={4} textAlign={'center'} id="cookie-consent-title">Cookie Preferences</DialogTitle>
+      <Box p={2} display="flex" justifyContent="end">
+        <Select
+          value={selectedLanguage}
+          onChange={handleLanguageChange}
+          variant="standard"
+          sx={{ width: '40px', fontSize: '11px' }}
+        >
+          <MenuItem value="en" sx={{ fontSize: '11px' }}>EN</MenuItem>
+          <MenuItem value="nl" sx={{ fontSize: '11px' }}>NL</MenuItem>
+          <MenuItem value="fr" sx={{ fontSize: '11px' }}>FR</MenuItem>
+          <MenuItem value="de" sx={{ fontSize: '11px' }}>DE</MenuItem>
+          <MenuItem value="es" sx={{ fontSize: '11px' }}>ES</MenuItem>
+          {/* Add more languages here if needed */}
+        </Select>
+      </Box>
+      <DialogTitle variant='h4' textAlign={'center'} id="cookie-consent-title">{t('cookiePreferencesTitle')}</DialogTitle>
       <DialogContent>
         <Typography variant="body2" m={4} mt={2} fontWeight={'bold'} textAlign={'center'}>
-          We use cookies to enhance your browsing experience and deliver relevant content.
-          These cookies help us understand your interactions with the site, improving features and offering personalized content.
+          {t('cookieDescription')}
         </Typography>
         <Divider sx={{ mt: '20px', mb: '20px' }} />
         <Accordion elevation={0}>
           <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-            <Typography>Manage Preferences</Typography>
+            <Typography>{t('managePreferences')}</Typography>
           </AccordionSummary>
           <AccordionDetails>
             <Box>
@@ -186,7 +208,7 @@ const CookieConsentBanner = ({ isGTMInitialized }) => {
               </FormGroup>
               <Box justifyContent={'center'} display={'flex'} mt={1}>
                 <Button onClick={handleSavePreferences} variant="outlined" color="#000000" sx={{ m: '15px' }}>
-                  Save Preferences
+                  {t('buttons.savePreferences')}
                 </Button>
               </Box>
             </Box>
@@ -196,18 +218,18 @@ const CookieConsentBanner = ({ isGTMInitialized }) => {
       <DialogActions sx={{ justifyContent: 'center' }}>
         <Box display={{ xs: 'none', sm: 'flex' }} justifyContent={'center'} width={'100%'}>
           <Button onClick={handleRejectAll} variant="outlined" color="#000000" sx={{ m: '15px', width: '30%' }}>
-            Reject All
+            {t('buttons.rejectAll')}
           </Button>
           <Button onClick={handleAcceptAll} variant="contained" sx={{ m: '15px', width: '30%', backgroundColor: '#000000' }}>
-            Accept all
+            {t('buttons.acceptAll')}
           </Button>
         </Box>
         <Box display={{ xs: 'flex', sm: 'none' }} justifyContent={'center'} width={'100%'} sx={{ flexDirection: 'column' }}>
           <Button onClick={handleAcceptAll} variant="contained" sx={{ m: '5px', backgroundColor: '#000000' }}>
-            Accept all
+            {t('buttons.acceptAll')}
           </Button>
           <Button onClick={handleRejectAll} variant="outlined" color="#000000" sx={{ m: '5px' }}>
-            Reject All
+            {t('buttons.rejectAll')}
           </Button>
         </Box>
       </DialogActions>

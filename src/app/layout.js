@@ -4,6 +4,7 @@
 import { useEffect, useState } from 'react';
 import CookieConsentBanner from './components/CookieConsentBanner'; // We gaan dit component maken voor de banner
 import Head from 'next/head';
+import '../i18n/i18next';
 
 export default function Layout({ children }) {
   const [isGTMInitialized, setIsGTMInitialized] = useState(false);
