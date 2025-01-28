@@ -3,7 +3,8 @@
 
 import { useState, useEffect } from 'react';
 import { useCookies } from 'react-cookie';
-import { Box, Button, Typography, Checkbox, FormControlLabel, Dialog, DialogActions, DialogContent, DialogTitle, Switch, FormGroup, Divider, FormLabel } from '@mui/material';
+import { Box, Button, Typography, Checkbox, FormControlLabel, Dialog, DialogActions, DialogContent, DialogTitle, Switch, FormGroup, Divider, FormLabel, Accordion, AccordionSummary, AccordionDetails } from '@mui/material';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 
 const PreferenceOption = ({ option, checked, onChange, index }) => (
   <Box sx={{ mb: '20px' }}>
@@ -162,37 +163,53 @@ const CookieConsentBanner = ({ isGTMInitialized }) => {
       <DialogTitle variant='h4' mt={4} textAlign={'center'} id="cookie-consent-title">Cookie Preferences</DialogTitle>
       <DialogContent>
         <Typography variant="body2" m={4} mt={2} fontWeight={'bold'} textAlign={'center'}>
-          We use cookies to enhance your browsing experience and deliver relevant content.<br /><br />
+          We use cookies to enhance your browsing experience and deliver relevant content.
           These cookies help us understand your interactions with the site, improving features and offering personalized content.
-          You have control over which cookies are placed on your device, allowing you to customize your experience.<br /><br />
-          Please review the available options and select the cookies you'd like us to use.
         </Typography>
         <Divider sx={{ mt: '20px', mb: '20px' }} />
-        <Box>
-          <FormGroup>
-            {preferenceOptions.map((option, index) => (
-              <PreferenceOption
-                key={option.name}
-                option={option}
-                checked={preferences[option.name]}
-                onChange={handlePreferenceChange}
-                index={index}
-              />
-            ))}
-          </FormGroup>
-        </Box>
+        <Accordion elevation={0}>
+          <AccordionSummary expandIcon={<ExpandMoreIcon />}>
+            <Typography>Manage Preferences</Typography>
+          </AccordionSummary>
+          <AccordionDetails>
+            <Box>
+              <FormGroup>
+                {preferenceOptions.map((option, index) => (
+                  <PreferenceOption
+                    key={option.name}
+                    option={option}
+                    checked={preferences[option.name]}
+                    onChange={handlePreferenceChange}
+                    index={index}
+                  />
+                ))}
+              </FormGroup>
+              <Box justifyContent={'center'} display={'flex'} mt={1}>
+                <Button onClick={handleSavePreferences} variant="outlined" color="#000000" sx={{ m: '15px' }}>
+                  Save Preferences
+                </Button>
+              </Box>
+            </Box>
+          </AccordionDetails>
+        </Accordion>
       </DialogContent>
-      <Divider sx={{ mt: '20px', mb: { xs: '5px', sm: '15px' } }} />
-      <DialogActions sx={{ justifyContent: 'center', flexDirection: { xs: 'column', sm: 'row' } }}>
-        <Button onClick={handleRejectAll} variant="outlined" color="#000000" sx={{ m: { xs: '5px', sm: '15px' }, width: { xs: '100%', sm: '30%' } }}>
-          Reject All
-        </Button>
-        <Button onClick={handleSavePreferences} variant="outlined" color="#000000" sx={{ m: { xs: '5px', sm: '15px' }, width: { xs: '100%', sm: '40%' } }}>
-          Save Preferences
-        </Button>
-        <Button onClick={handleAcceptAll} variant="contained" sx={{ m: { xs: '5px', sm: '15px' }, width: { xs: '100%', sm: '30%' }, backgroundColor: '#000000' }}>
-          Accept all
-        </Button>
+      <DialogActions sx={{ justifyContent: 'center' }}>
+        <Box display={{ xs: 'none', sm: 'flex' }} justifyContent={'center'} width={'100%'}>
+          <Button onClick={handleRejectAll} variant="outlined" color="#000000" sx={{ m: '15px', width: '30%' }}>
+            Reject All
+          </Button>
+          <Button onClick={handleAcceptAll} variant="contained" sx={{ m: '15px', width: '30%', backgroundColor: '#000000' }}>
+            Accept all
+          </Button>
+        </Box>
+        <Box display={{ xs: 'flex', sm: 'none' }} justifyContent={'center'} width={'100%'} sx={{ flexDirection: 'column' }}>
+          <Button onClick={handleAcceptAll} variant="contained" sx={{ m: '5px', backgroundColor: '#000000' }}>
+            Accept all
+          </Button>
+          <Button onClick={handleRejectAll} variant="outlined" color="#000000" sx={{ m: '5px' }}>
+            Reject All
+          </Button>
+        </Box>
       </DialogActions>
     </Dialog>
   );
