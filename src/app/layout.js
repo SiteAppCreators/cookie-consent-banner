@@ -2,13 +2,10 @@
 'use client';  // Zorg ervoor dat dit bestand als client-side wordt behandeld
 
 import { useEffect, useState } from 'react';
-import CookieConsentBanner from './components/CookieConsentBanner'; // We gaan dit component maken voor de banner
+import CookieConsentBanner from './components/CookieConsentBanner';
 import Head from 'next/head';
-import '../i18n/i18next';
 
 export default function Layout({ children }) {
-  const [isGTMInitialized, setIsGTMInitialized] = useState(false);
-
   useEffect(() => {
     // Laad het Google Tag Manager script
     const script = document.createElement('script');
@@ -22,7 +19,6 @@ export default function Layout({ children }) {
         window.dataLayer.push(arguments);
       };
 
-      setIsGTMInitialized(true); // Zet de GTM-initialisatie op true
     };
 
     document.head.appendChild(script);
@@ -66,7 +62,7 @@ export default function Layout({ children }) {
         </noscript>
 
         {/* Je cookie consent banner */}
-        <CookieConsentBanner isGTMInitialized={isGTMInitialized} />
+        <CookieConsentBanner />
         {children}
       </body>
     </html>

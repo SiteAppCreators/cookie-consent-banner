@@ -1,11 +1,13 @@
 // components/CookieConsentBanner.js
 'use client';
 
+import React from 'react';
 import { useState, useEffect } from 'react';
 import { useCookies } from 'react-cookie';
 import { Box, Button, Typography, Checkbox, FormControlLabel, Dialog, DialogActions, DialogContent, DialogTitle, Switch, FormGroup, Divider, FormLabel, Accordion, AccordionSummary, AccordionDetails, Select, MenuItem } from '@mui/material';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { useTranslation } from 'react-i18next';
+import '../../i18n/i18next';
 
 const PreferenceOption = ({ option, checked, onChange, index }) => (
   <Box sx={{ mb: '20px' }}>
@@ -30,7 +32,7 @@ const PreferenceOption = ({ option, checked, onChange, index }) => (
   </Box>
 );
 
-const CookieConsentBanner = ({ isGTMInitialized }) => {
+const CookieConsentBanner = () => {
   const { t, i18n } = useTranslation(); // Translation hook
   const [cookies, setCookie] = useCookies(['cookie-consent']); // Name of cookie
   const [isVisible, setIsVisible] = useState(false); // Show the banner
@@ -54,8 +56,6 @@ const CookieConsentBanner = ({ isGTMInitialized }) => {
   }, [cookies]);
 
   function syncConsentWithGTM(consent) {
-    if (!isGTMInitialized) return; // Wait till GTM is initialized
-
     const consentData = {
       ad_storage: consent.ads ? 'granted' : 'denied',
       ad_user_data: consent.ads ? 'granted' : 'denied',
@@ -154,7 +154,7 @@ const CookieConsentBanner = ({ isGTMInitialized }) => {
     },
   ];
 
-  const handleLanguageChange = (event) => {
+  function handleLanguageChange(event) {
     const selectedLang = event.target.value;
     setSelectedLanguage(selectedLang);
     i18n.changeLanguage(selectedLang);
