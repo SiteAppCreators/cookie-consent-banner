@@ -4,8 +4,9 @@
 import React from 'react';
 import { useState, useEffect } from 'react';
 import { useCookies } from 'react-cookie';
-import { Box, Button, Typography, Checkbox, FormControlLabel, Dialog, DialogActions, DialogContent, DialogTitle, Switch, FormGroup, Divider, FormLabel, Accordion, AccordionSummary, AccordionDetails, Select, MenuItem } from '@mui/material';
+import { Box, Button, Typography, Checkbox, FormControlLabel, Dialog, DialogActions, DialogContent, DialogTitle, Switch, FormGroup, Divider, FormLabel, Accordion, AccordionSummary, AccordionDetails, Select, MenuItem, IconButton } from '@mui/material';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import CookieIcon from '@mui/icons-material/Cookie';
 import { useTranslation } from 'react-i18next';
 import '../../i18n/i18next';
 
@@ -32,7 +33,7 @@ const PreferenceOption = ({ option, checked, onChange, index }) => (
   </Box>
 );
 
-const CookieConsentBanner = () => {
+const CookieConsentBanner = ({ gtmId }) => {
   const { t, i18n } = useTranslation(); // Translation hook
   const [cookies, setCookie] = useCookies(['cookie-consent']); // Name of cookie
   const [isVisible, setIsVisible] = useState(false); // Show the banner
@@ -55,6 +56,27 @@ const CookieConsentBanner = () => {
     }
   }, [cookies]);
 
+  useEffect(() => {
+    // Laad het Google Tag Manager script
+    const script = document.createElement('script');
+    script.src = `https://www.googletagmanager.com/gtm.js?id=${gtmId}`;  // Vervang dit met jouw GTM-ID
+    script.async = true;
+
+    script.onload = () => {
+      // Initialiseer GTM zodra het script is geladen
+      window.dataLayer = window.dataLayer || [];
+      window.gtag = function () {
+        window.dataLayer.push(arguments);
+      };
+    };
+
+    document.head.appendChild(script);
+
+    return () => {
+      document.head.removeChild(script); // Verwijder het script bij unmounten van de layout
+    };
+  }, []); // Dit gebeurt slechts eenmaal bij de eerste render
+
   function syncConsentWithGTM(consent) {
     const consentData = {
       ad_storage: consent.ads ? 'granted' : 'denied',
@@ -68,8 +90,6 @@ const CookieConsentBanner = () => {
 
     if (typeof window.gtag === 'function') {
       window.gtag('consent', 'update', consentData);
-    } else {
-      console.error('GTM is not properly initialized.');
     }
   };
 
@@ -121,8 +141,6 @@ const CookieConsentBanner = () => {
     }));
   };
 
-  if (!isVisible) return null;
-
 
   //All cookies
   const preferenceOptions = [
@@ -161,79 +179,95 @@ const CookieConsentBanner = () => {
   };
 
   return (
-    <Dialog
-      open={isVisible}
-      onClose={() => { }}
-      aria-labelledby="cookie-consent-title"
-      maxWidth="sm"
-      fullWidth
-    >
-      <Box p={2} display="flex" justifyContent="end">
-        <Select
-          value={selectedLanguage}
-          onChange={handleLanguageChange}
-          variant="standard"
-          sx={{ width: '40px', fontSize: '11px' }}
-        >
-          <MenuItem value="en" sx={{ fontSize: '11px' }}>EN</MenuItem>
-          <MenuItem value="nl" sx={{ fontSize: '11px' }}>NL</MenuItem>
-          <MenuItem value="fr" sx={{ fontSize: '11px' }}>FR</MenuItem>
-          <MenuItem value="de" sx={{ fontSize: '11px' }}>DE</MenuItem>
-          <MenuItem value="es" sx={{ fontSize: '11px' }}>ES</MenuItem>
-          {/* Add more languages here if needed */}
-        </Select>
-      </Box>
-      <DialogTitle variant='h4' textAlign={'center'} id="cookie-consent-title">{t('cookiePreferencesTitle')}</DialogTitle>
-      <DialogContent>
-        <Typography variant="body2" m={4} mt={2} fontWeight={'bold'} textAlign={'center'}>
-          {t('cookieDescription')}
-        </Typography>
-        <Divider sx={{ mt: '20px', mb: '20px' }} />
-        <Accordion elevation={0}>
-          <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-            <Typography>{t('managePreferences')}</Typography>
-          </AccordionSummary>
-          <AccordionDetails>
-            <Box>
-              <FormGroup>
-                {preferenceOptions.map((option, index) => (
-                  <PreferenceOption
-                    key={option.name}
-                    option={option}
-                    checked={preferences[option.name]}
-                    onChange={handlePreferenceChange}
-                    index={index}
-                  />
-                ))}
-              </FormGroup>
-              <Box justifyContent={'center'} display={'flex'} mt={1}>
-                <Button onClick={handleSavePreferences} variant="outlined" color="#000000" sx={{ m: '15px' }}>
-                  {t('buttons.savePreferences')}
-                </Button>
+    <>
+      <Button sx={{
+        visibility: isVisible ? 'hidden' : 'visible',
+        position: 'fixed',
+        bottom: '20px',
+        left: '20px',
+        zIndex: 1000,
+        backgroundColor: 'black',
+        minWidth: '50px',
+        minHeight: '50px',
+        borderRadius: '50%',
+        padding: '10px',
+      }} onClick={() => setIsVisible(true)} variant="contained">
+        <CookieIcon sx={{ color: 'white' }} />
+      </Button>
+      <Dialog
+        open={isVisible}
+        onClose={() => { }}
+        aria-labelledby="cookie-consent-title"
+        maxWidth="sm"
+        fullWidth
+      >
+        <Box p={2} display="flex" justifyContent="end">
+          <Select
+            value={selectedLanguage}
+            onChange={handleLanguageChange}
+            variant="standard"
+            sx={{ width: '40px', fontSize: '11px' }}
+          >
+            <MenuItem value="en" sx={{ fontSize: '11px' }}>EN</MenuItem>
+            <MenuItem value="nl" sx={{ fontSize: '11px' }}>NL</MenuItem>
+            <MenuItem value="fr" sx={{ fontSize: '11px' }}>FR</MenuItem>
+            <MenuItem value="de" sx={{ fontSize: '11px' }}>DE</MenuItem>
+            <MenuItem value="es" sx={{ fontSize: '11px' }}>ES</MenuItem>
+            {/* Add more languages here if needed */}
+          </Select>
+        </Box>
+        <DialogTitle variant='h4' textAlign={'center'} id="cookie-consent-title">{t('cookiePreferencesTitle')}</DialogTitle>
+        <DialogContent>
+          <Typography variant="body2" m={4} mt={2} fontWeight={'bold'} textAlign={'center'}>
+            {t('cookieDescription')}
+          </Typography>
+          <Divider sx={{ mt: '20px', mb: '20px' }} />
+          <Accordion elevation={0}>
+            <AccordionSummary expandIcon={<ExpandMoreIcon />}>
+              <Typography>{t('managePreferences')}</Typography>
+            </AccordionSummary>
+            <AccordionDetails>
+              <Box>
+                <FormGroup>
+                  {preferenceOptions.map((option, index) => (
+                    <PreferenceOption
+                      key={option.name}
+                      option={option}
+                      checked={preferences[option.name]}
+                      onChange={handlePreferenceChange}
+                      index={index}
+                    />
+                  ))}
+                </FormGroup>
+                <Box justifyContent={'center'} display={'flex'} mt={1}>
+                  <Button onClick={handleSavePreferences} variant="outlined" color="#000000" sx={{ m: '15px' }}>
+                    {t('buttons.savePreferences')}
+                  </Button>
+                </Box>
               </Box>
-            </Box>
-          </AccordionDetails>
-        </Accordion>
-      </DialogContent>
-      <DialogActions sx={{ justifyContent: 'center' }}>
-        <Box display={{ xs: 'none', sm: 'flex' }} justifyContent={'center'} width={'100%'}>
-          <Button onClick={handleRejectAll} variant="outlined" color="#000000" sx={{ m: '15px', width: '30%' }}>
-            {t('buttons.rejectAll')}
-          </Button>
-          <Button onClick={handleAcceptAll} variant="contained" sx={{ m: '15px', width: '30%', backgroundColor: '#000000' }}>
-            {t('buttons.acceptAll')}
-          </Button>
-        </Box>
-        <Box display={{ xs: 'flex', sm: 'none' }} justifyContent={'center'} width={'100%'} sx={{ flexDirection: 'column' }}>
-          <Button onClick={handleAcceptAll} variant="contained" sx={{ m: '5px', backgroundColor: '#000000' }}>
-            {t('buttons.acceptAll')}
-          </Button>
-          <Button onClick={handleRejectAll} variant="outlined" color="#000000" sx={{ m: '5px' }}>
-            {t('buttons.rejectAll')}
-          </Button>
-        </Box>
-      </DialogActions>
-    </Dialog>
+            </AccordionDetails>
+          </Accordion>
+        </DialogContent>
+        <DialogActions sx={{ justifyContent: 'center' }}>
+          <Box display={{ xs: 'none', sm: 'flex' }} justifyContent={'center'} width={'100%'}>
+            <Button onClick={handleRejectAll} variant="outlined" color="#000000" sx={{ m: '15px', width: '30%' }}>
+              {t('buttons.rejectAll')}
+            </Button>
+            <Button onClick={handleAcceptAll} variant="contained" sx={{ m: '15px', width: '30%', backgroundColor: '#000000' }}>
+              {t('buttons.acceptAll')}
+            </Button>
+          </Box>
+          <Box display={{ xs: 'flex', sm: 'none' }} justifyContent={'center'} width={'100%'} sx={{ flexDirection: 'column' }}>
+            <Button onClick={handleAcceptAll} variant="contained" sx={{ m: '5px', backgroundColor: '#000000' }}>
+              {t('buttons.acceptAll')}
+            </Button>
+            <Button onClick={handleRejectAll} variant="outlined" color="#000000" sx={{ m: '5px' }}>
+              {t('buttons.rejectAll')}
+            </Button>
+          </Box>
+        </DialogActions>
+      </Dialog>
+    </>
   );
 };
 

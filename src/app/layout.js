@@ -2,42 +2,22 @@
 'use client';  // Zorg ervoor dat dit bestand als client-side wordt behandeld
 
 import { useEffect, useState } from 'react';
-import CookieConsentBanner from './components/CookieConsentBanner';
+// import CookieConsentBanner from '../../dist/cookie-consent-banner';  // Importeer de cookie consent banner
+import CookieConsentBanner from './components/CookieConsentBanner';  // Importeer de cookie consent banner
 import Head from 'next/head';
+import { Button } from '@mui/material';
 
 export default function Layout({ children }) {
-  useEffect(() => {
-    // Laad het Google Tag Manager script
-    const script = document.createElement('script');
-    script.src = 'https://www.googletagmanager.com/gtm.js?id=GTM-MQ8R2XL7';  // Vervang dit met jouw GTM-ID
-    script.async = true;
-
-    script.onload = () => {
-      // Initialiseer GTM zodra het script is geladen
-      window.dataLayer = window.dataLayer || [];
-      window.gtag = function () {
-        window.dataLayer.push(arguments);
-      };
-
-    };
-
-    document.head.appendChild(script);
-
-    return () => {
-      document.head.removeChild(script); // Verwijder het script bij unmounten van de layout
-    };
-  }, []); // Dit gebeurt slechts eenmaal bij de eerste render
 
   return (
     <html lang="en">
       <head>
         <meta charSet="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <Head>
-          {/* GTM script voor de head van je pagina */}
-          <script
-            dangerouslySetInnerHTML={{
-              __html: `
+        {/* GTM script voor de head van je pagina */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
                 (function(w,d,s,l,i){
                   w[l]=w[l]||[];
                   w[l].push({'gtm.start': new Date().getTime(), event:'gtm.js'});
@@ -46,9 +26,8 @@ export default function Layout({ children }) {
                   f.parentNode.insertBefore(j,f);
                 })(window,document,'script','dataLayer','GTM-MQ8R2XL7');
               `,
-            }}
-          />
-        </Head>
+          }}
+        />
       </head>
       <body>
         {/* Noscript fallback voor Google Tag Manager */}
@@ -62,7 +41,8 @@ export default function Layout({ children }) {
         </noscript>
 
         {/* Je cookie consent banner */}
-        <CookieConsentBanner />
+        <CookieConsentBanner
+          gtmId={'GTM-MQ8R2XL7'} />
         {children}
       </body>
     </html>
