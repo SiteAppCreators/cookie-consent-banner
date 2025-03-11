@@ -1,0 +1,30 @@
+{
+    "cookiePreferencesTitle": "Préférences des cookies",
+    "cookieDescription": "Nous utilisons des cookies pour améliorer votre expérience de navigation et offrir du contenu pertinent. Ces cookies nous aident à comprendre vos interactions avec le site, à améliorer les fonctionnalités et à proposer un contenu personnalisé. Vous avez le contrôle des cookies placés sur votre appareil, vous permettant de personnaliser votre expérience. Veuillez examiner les options disponibles et sélectionner les cookies que vous souhaitez utiliser.",
+    "managePreferences": "Gérer les préférences",
+    "necessary": {
+        "label": "Nécessaire",
+        "description": "Ce paramètre permet d'activer les cookies essentiels au bon fonctionnement du site web. Ces cookies sont requis pour les fonctionnalités de base, telles que l'authentification des utilisateurs et la gestion des préférences."
+    },
+    "advertising": {
+        "label": "Publicité",
+        "description": "Les cookies publicitaires sont utilisés pour afficher des annonces ciblées en fonction de votre navigation précédente. Ils permettent également d’évaluer l’efficacité des campagnes publicitaires."
+    },
+    "analytics": {
+        "label": "Analyse",
+        "description": "Les cookies analytiques permettent de suivre l'interaction des utilisateurs avec le site. Ils recueillent des données telles que le nombre de visiteurs, les sources de trafic et le taux de rebond afin d'améliorer les informations utilisateur."
+    },
+    "functionality": {
+        "label": "Fonctionnalité",
+        "description": "Les cookies fonctionnels prennent en charge diverses fonctionnalités interactives du site, telles que le partage sur les réseaux sociaux, la collecte de commentaires utilisateurs et l'intégration de fonctionnalités tierces."
+    },
+    "personalization": {
+        "label": "Personnalisation",
+        "description": "Les cookies de personnalisation recueillent des données pour adapter l'expérience du site aux utilisateurs individuels. Ils suivent les interactions clés afin de proposer une expérience personnalisée basée sur les préférences."
+    },
+    "buttons": {
+        "rejectAll": "Tout refuser",
+        "savePreferences": "Enregistrer les préférences",
+        "acceptAll": "Tout accepter"
+    }
+}

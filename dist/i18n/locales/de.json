@@ -1,0 +1,30 @@
+{
+    "cookiePreferencesTitle": "Cookie-Einstellungen",
+    "cookieDescription": "Wir verwenden Cookies, um Ihr Browser-Erlebnis zu verbessern und relevante Inhalte bereitzustellen. Diese Cookies helfen uns, Ihre Interaktionen mit der Website zu verstehen, Funktionen zu verbessern und personalisierte Inhalte anzubieten. Sie haben die Kontrolle darüber, welche Cookies auf Ihrem Gerät gespeichert werden, und können Ihre Erfahrung anpassen. Bitte überprüfen Sie die verfügbaren Optionen und wählen Sie die gewünschten Cookies aus.",
+    "managePreferences": "Einstellungen verwalten",
+    "necessary": {
+        "label": "Notwendig",
+        "description": "Diese Einstellung ermöglicht Cookies, die für das ordnungsgemäße Funktionieren der Website erforderlich sind. Diese Cookies unterstützen grundlegende Funktionen wie Benutzerauthentifizierung und Präferenzeinstellungen."
+    },
+    "advertising": {
+        "label": "Werbung",
+        "description": "Werbe-Cookies werden verwendet, um gezielte Anzeigen basierend auf Ihrem früheren Browsing-Verhalten anzuzeigen. Sie helfen auch bei der Bewertung der Wirksamkeit von Werbekampagnen."
+    },
+    "analytics": {
+        "label": "Analyse",
+        "description": "Analyse-Cookies helfen dabei, zu verfolgen, wie Benutzer mit der Website interagieren. Sie sammeln Daten wie Besucherzahlen, Verkehrsquellen und Absprungraten, um Einblicke zu verbessern."
+    },
+    "functionality": {
+        "label": "Funktionalität",
+        "description": "Funktionale Cookies unterstützen verschiedene interaktive Funktionen auf der Website, wie das Teilen in sozialen Medien, das Sammeln von Benutzerfeedback und die Integration von Drittanbieter-Funktionen."
+    },
+    "personalization": {
+        "label": "Personalisierung",
+        "description": "Personalisierte Cookies sammeln Daten, um die Website-Erfahrung auf einzelne Benutzer zuzuschneiden. Sie verfolgen wichtige Interaktionen, um eine auf Präferenzen basierende Erfahrung zu bieten."
+    },
+    "buttons": {
+        "rejectAll": "Alle ablehnen",
+        "savePreferences": "Einstellungen speichern",
+        "acceptAll": "Alle akzeptieren"
+    }
+}

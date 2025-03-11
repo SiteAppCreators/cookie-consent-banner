@@ -1,0 +1,30 @@
+{
+    "cookiePreferencesTitle": "Cookie Voorkeuren",
+    "cookieDescription": "We gebruiken cookies om je browse-ervaring te verbeteren en relevante inhoud te leveren. Deze cookies helpen ons om je interacties met de site te begrijpen, functies te verbeteren en gepersonaliseerde inhoud aan te bieden. Je hebt controle over welke cookies er op je apparaat worden geplaatst, zodat je je ervaring kunt aanpassen. Bekijk de beschikbare opties en selecteer de cookies die je wilt dat wij gebruiken.",
+    "managePreferences": "Voorkeuren beheren",
+    "necessary": {
+        "label": "Nodig",
+        "description": "Deze instelling maakt cookies mogelijk die essentieel zijn voor de juiste werking van de website. Ze helpen met basisfunctionaliteiten zoals gebruikersauthenticatie en voorkeuren."
+    },
+    "advertising": {
+        "label": "Reclame",
+        "description": "Reclamecookies worden gebruikt om gerichte advertenties weer te geven op basis van je eerdere browsegedrag op de site. Ze helpen ook bij het evalueren van de effectiviteit van reclamecampagnes."
+    },
+    "analytics": {
+        "label": "Analytics",
+        "description": "Analytics-cookies helpen bij het volgen van hoe gebruikers omgaan met de website. Ze verzamelen gegevens zoals het aantal bezoekers, de bronnen van verkeer en het bouncepercentage om gebruikersinzichten te verbeteren."
+    },
+    "functionality": {
+        "label": "Functionaliteit",
+        "description": "Functionele cookies ondersteunen verschillende interactieve functies op de site, zoals het mogelijk maken van sociale-mediadelen, het verzamelen van gebruikersfeedback en het integreren van functionaliteiten van derden."
+    },
+    "personalization": {
+        "label": "Personalisatie",
+        "description": "Persoonlijk gemaakte cookies verzamelen gegevens om de website-ervaring af te stemmen op individuele gebruikers. Ze volgen belangrijke interacties om een meer op maat gemaakte ervaring te bieden op basis van voorkeuren."
+    },
+    "buttons": {
+        "rejectAll": "Alle afwijzen",
+        "savePreferences": "Voorkeuren opslaan",
+        "acceptAll": "Accepteer alles"
+    }
+}

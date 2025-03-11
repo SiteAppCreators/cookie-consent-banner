@@ -2,8 +2,8 @@
 'use client';  // Zorg ervoor dat dit bestand als client-side wordt behandeld
 
 import { useEffect, useState } from 'react';
-// import CookieConsentBanner from '../../dist/cookie-consent-banner';  // Importeer de cookie consent banner
-import CookieConsentBanner from './components/CookieConsentBanner';  // Importeer de cookie consent banner
+import CookieConsentBanner from '../../dist/cookie-consent-banner';  // Importeer de cookie consent banner
+// import CookieConsentBanner from './components/CookieConsentBanner';  // Importeer de cookie consent banner
 import Head from 'next/head';
 import { Button } from '@mui/material';
 

@@ -1,0 +1,30 @@
+{
+    "cookiePreferencesTitle": "Cookie Preferences",
+    "cookieDescription": "We use cookies to enhance your browsing experience and deliver relevant content. These cookies help us understand your interactions with the site, improving features and offering personalized content. You have control over which cookies are placed on your device, allowing you to customize your experience. Please review the available options and select the cookies you'd like us to use.",
+    "managePreferences": "Manage Preferences",
+    "necessary": {
+        "label": "Necessary",
+        "description": "This setting enables cookies that are essential for the website to function properly, so are required. These cookies help with basic functionalities such as user authentication and preferences."
+    },
+    "advertising": {
+        "label": "Advertising",
+        "description": "Advertising cookies are used to display targeted ads according to your previous browsing behavior on the site. They also assist in evaluating the effectiveness of ad campaigns."
+    },
+    "analytics": {
+        "label": "Analytics",
+        "description": "Analytics cookies help track how users interact with the website. They gather data like the number of visitors, sources of traffic, and the bounce rate to improve user insights."
+    },
+    "functionality": {
+        "label": "Functionality",
+        "description": "Functional cookies support various interactive features on the site, such as enabling social media sharing, gathering user feedback, and incorporating third-party functionalities."
+    },
+    "personalization": {
+        "label": "Personalization",
+        "description": "Personalized cookies gather data to tailor the website experience to individual users. They track key interactions to deliver a more customized experience based on preferences."
+    },
+    "buttons": {
+        "rejectAll": "Reject All",
+        "savePreferences": "Save Preferences",
+        "acceptAll": "Accept all"
+    }
+}
