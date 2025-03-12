@@ -32,13 +32,7 @@ module.exports = {
     ],
   },
   externals: {
-    react: 'react',
-    'react-dom': 'react-dom',
-    'react-cookies': 'react-cookies',
-    'react-i18next': 'react-i18next',
-    '@mui/material': '@mui/material',
+    react: 'React',
     '@emotion/react': '@emotion/react',
-    '@emotion/styled': '@emotion/styled',
-    '@mui/icons-material': '@mui/icons-material',
   },
 };
